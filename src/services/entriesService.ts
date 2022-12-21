@@ -1,9 +1,9 @@
 import entriesData from '../entries.json'
-import { EntryI } from '../types';
+import { EntryI } from '../types'
 
-const entries: Array<EntryI> = entriesData as Array<EntryI>;
+const entries: EntryI[] = entriesData as EntryI[]
 
-export const getAllEntries = () => entries;
-export const createEntry = () => null;
+export const getAllEntries = (): EntryI[] => entries
+export const createEntry = (): undefined => undefined
 
-export default{ getAllEntries, createEntry}
+export default { getAllEntries, createEntry }
