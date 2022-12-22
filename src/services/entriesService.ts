@@ -1,18 +1,26 @@
 import entriesData from '../entries.json'
-import { Entry, NonSensitiveInfoEntry } from '../types'
+import { Entry, NewEntry, NonSensitiveInfoEntry } from '../types'
 
 const entries: Entry[] = entriesData as Entry[]
 
 export const getAllEntries = (): Entry[] => entries
 
-export const createEntry = (): undefined => undefined
+export const createEntry = (newEntry: NewEntry): Entry => {
+  const newEntryWithId: Entry = {
+    id: entries.length + 1,
+    ...newEntry
+  }
 
-export const findEntryById = (id: number): NonSensitiveInfoEntry | undefined => {
+  entries.push(newEntryWithId)
+
+  return newEntryWithId
+}
+
+export const findEntryById = (id: number): Entry | undefined => {
   const entry = entries.find(entry => entry.id === id)
 
   if (entry != null) {
-    const { comment, ...restOfEntry } = entry
-    return restOfEntry
+    return entry
   }
 
   return undefined
@@ -25,9 +33,15 @@ export const getEntriesWithoutSensitiveEntryInfo = (): NonSensitiveInfoEntry [] 
       date,
       weather,
       visibility
-
     }
   })
 }
+export const deleteEntryById = (id: number): Entry | undefined => {
+  const entryToDelete = findEntryById(id)
 
-export default { getAllEntries, createEntry, getEntriesWithoutSensitiveEntryInfo }
+  if (entryToDelete != null) {
+    return entryToDelete
+  }
+
+  return undefined
+}
